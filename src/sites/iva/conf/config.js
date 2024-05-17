@@ -28,14 +28,18 @@ const hosts = [
         id: "reference",
         url: "https://test.app.zettagenomics.com/reference/opencga"
     },
+    {
+        id: "local",
+        url: "http://localhost:9090/opencga"
+    },
 ];
 
 const opencga = {
-    host: hosts[2].url,
+    host: hosts[3].url,
     version: "v2",
     organizations: [],
     cookie: {
-        prefix: "iva-" + hosts[2].id,
+        prefix: "iva-" + hosts[3].id,
         secure: true,
     },
     sso: {

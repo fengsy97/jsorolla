@@ -199,6 +199,8 @@ export default class VariantGridFormatter {
                 consequenceTypes: []
             };
         }
+        // console.log("formater ",variant);
+        return "-";
         const {selectedConsequenceTypes, notSelectedConsequenceTypes} =
             VariantGridFormatter._consequenceTypeDetailFormatterFilter(variant.annotation.consequenceTypes, gridCtSettings);
 
@@ -525,6 +527,7 @@ export default class VariantGridFormatter {
         const notSelectedConsequenceTypes = [];
         const showArrayIndexes = [];
 
+        console.log("cts", cts)
         const geneSet = filter?.geneSet ? filter.geneSet : {};
         for (let i = 0; i < cts.length; i++) {
             const ct = cts[i];

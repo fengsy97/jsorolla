@@ -59,10 +59,13 @@ export default {
     // @param {string} componentId - ID of the component where this new column will be injected
     // @return {object} data - an object with data required for columns
     async prepareDataForColumns(componentId, opencgaSession, query, rows) {
+        // console.log("prepareDataForColumns", componentId, rows);
         const data = {};
         const columns = this.getByType(this.TYPES.COLUMN)
             .filter(extension => (extension.components || []).includes(componentId))
             .filter(extension => typeof extension.prepareData === "function");
+        
+        // console.log("prepareDataForColumns", columns);
 
         for (let i = 0; i < columns.length; i++) {
             const extension = columns[i];
@@ -71,6 +74,7 @@ export default {
                 data[extension.id] = columnData;
             }
         }
+        // console.log("prepareDataForColumns", data);
         return data;
     },
 

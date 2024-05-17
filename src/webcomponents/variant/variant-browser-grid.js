@@ -212,6 +212,7 @@ export default class VariantBrowserGrid extends LitElement {
                         // summary: !this.query.sample && !this.query.family,
                         ...this.query
                     };
+
                     // TASK-5791: Temporary SNP ID Search fix
                     if (this.query.xref) {
                         const snpIds = this.query.xref.split(",").filter(xref => xref.startsWith("rs"));
@@ -239,6 +240,7 @@ export default class VariantBrowserGrid extends LitElement {
                         }
                     }
                     let variantResponse = null;
+                    console.log("Querying variants", this.filters);
                     this.opencgaSession.opencgaClient.variants().query(this.filters)
                         .then(res => {
                             // FIXME A quick temporary fix -> TASK-947
@@ -299,15 +301,24 @@ export default class VariantBrowserGrid extends LitElement {
                         .then(() => {
                             // Prepare data for columns extensions
                             const rows = variantResponse.responses?.[0]?.results || [];
+                            console.log("Preparing data for extensions");
                             return this.gridCommons.prepareDataForExtensions(this.COMPONENT_ID, this.opencgaSession, this.filters, rows);
                         })
-                        .then(() => params.success(variantResponse))
-                        .catch(e => params.error(e))
+                        .then(() => {
+                            const rows = variantResponse.responses[0].results;
+                            console.log("get rows",variantResponse);
+                            params.success(variantResponse);
+                        })
+                        .catch(e => {
+                            params.error(e);
+                            console.log("Error fetching variants", e);
+                        })
                         .finally(() => {
                             LitUtils.dispatchCustomEvent(this, "queryComplete", null);
                         });
                 },
                 responseHandler: response => {
+                    
                     const result = this.gridCommons.responseHandler(response, $(this.table).bootstrapTable("getOptions"));
 
                     // Only the first 1M pages must be shown
@@ -335,6 +346,7 @@ export default class VariantBrowserGrid extends LitElement {
                 },
                 onLoadSuccess: data => {
                     // We keep the table rows as global variable, needed to fetch the variant object when checked
+                    console.log("onLoadSuccess", data);
                     this._rows = data.rows;
                     this.gridCommons.onLoadSuccess(data, 2);
                 },
@@ -861,14 +873,14 @@ export default class VariantBrowserGrid extends LitElement {
                                         <a target="_blank" class="dropdown-item"
                                                 href="${BioinfoUtils.getVariantLink(row.id, row.chromosome + ":" + row.start + "-" + row.end, "CELLBASE_v5.0")}">
                                             <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-                                            CellBase 5.0 ${this.opencgaSession?.project.cellbase.version === "v5" || this.opencgaSession.project.cellbase.version === "v5.0" ? "(current)" : ""}
+                                            CellBase 5.0
                                         </a>
                                     </li>
                                     <li>
                                         <a target="_blank" class="dropdown-item"
                                                 href="${BioinfoUtils.getVariantLink(row.id, row.chromosome + ":" + row.start + "-" + row.end, "CELLBASE_v5.1")}">
                                             <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-                                            CellBase 5.1 ${this.opencgaSession?.project.cellbase.version === "v5.1" ? "(current)" : ""}
+                                            CellBase 5.1 
                                         </a>
                                     </li>
                                     <li class="dropdown-header">External Genome Browsers</li>

@@ -322,10 +322,14 @@ export default class GridCommons {
 
     async prepareDataForExtensions(componentId, opencgaSession, query, rows) {
         this.extensionsData = {};
+        // console.log("prepareDataForExtensions", rows);
+        // console.log("skipExtensions", this.context?._config?.skipExtensions);
         if (!this.context?._config?.skipExtensions) {
             const id = componentId || this.context?.COMPONENT_ID;
+            // console.log("not skipExtensions");
             this.extensionsData = await ExtensionsManager.prepareDataForColumns(id, opencgaSession, query, rows);
         }
+        // console.log("prepareDataForExtensions", this.extensionsData);
     }
 
     addColumnsFromExtensions(columns, componentId) {

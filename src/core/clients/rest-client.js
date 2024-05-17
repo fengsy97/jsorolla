@@ -70,6 +70,8 @@ export default class RestClient {
         let method = "GET";
         let async = true;
 
+        console.log("REST-Client: call to URL: ", url);
+
         // const key = k ? RestClient.hash(k) : null;
 
         let dataResponse = null;

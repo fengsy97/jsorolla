@@ -24,6 +24,7 @@ import "../commons/forms/text-field-filter.js";
 import "../commons/forms/select-field-filter.js";
 import "../commons/filters/catalog-distinct-autocomplete";
 import "../commons/filters/catalog-search-autocomplete.js";
+import { log } from "grunt";
 
 export default class OpencgaFileFilter extends LitElement {
 
@@ -133,6 +134,7 @@ export default class OpencgaFileFilter extends LitElement {
     }
 
     notifyQuery(query) {
+        log("notifyQuery:", query);
         this.dispatchEvent(new CustomEvent("queryChange", {
             detail: {
                 query: query
@@ -143,6 +145,7 @@ export default class OpencgaFileFilter extends LitElement {
     }
 
     notifySearch(query) {
+        log("notifySearch:", query);
         this.dispatchEvent(new CustomEvent("querySearch", {
             detail: {
                 query: query

@@ -32,7 +32,7 @@ export default class VariantUtils {
         const cohortAlleleStatsColumns = [];
         const alleleStats = [];
         const studyIds = [];
-
+        // console.log("jsonToTabConvert", variants);
         // Code to Remove
         // ###
         if (variants[0].studies?.length) {

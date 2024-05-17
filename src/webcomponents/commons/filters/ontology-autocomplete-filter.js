@@ -91,8 +91,10 @@ export default class OntologyAutocompleteFilter extends LitElement {
                         if (this.cellbaseClient?._config?.version === "v4") {
                             const cellbaseClient = new CellBaseClient({host: "https://ws.opencb.org/cellbase-5.0.0/", version: "v5"});
                             fetchGoOntologies = await cellbaseClient.get("feature", "ontology", undefined, "search", query, {});
+                            // console.log("feature ontology search 1");
                         } else {
                             fetchGoOntologies = await this.cellbaseClient.get("feature", "ontology", undefined, "search", query, {});
+                            // console.log("feature ontology search 2");
                         }
                         const results = fetchGoOntologies.responses[0].results;
                         const data = results.map(ontology => ({name: ontology.name, id: ontology.id}));

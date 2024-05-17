@@ -99,6 +99,8 @@ export default class VariantModalOntology extends LitElement {
             limit: 50,
             assembly: "GRCh38",
         };
+        console.log("feature ontology search 1");
+        // console.log(this.cellbaseClient);
         return this.cellbaseClient.get("feature", "ontology", undefined, "search", query, {});
     }
 

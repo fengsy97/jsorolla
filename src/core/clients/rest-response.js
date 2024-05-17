@@ -48,6 +48,7 @@ export class RestResponse {
                     this.response[i].results = response.result;
                 }
             });
+            console.log("RestResponse", this.responses);
         } catch (e) {
             console.error(e);
             throw new Error("Unexpected REST response format");

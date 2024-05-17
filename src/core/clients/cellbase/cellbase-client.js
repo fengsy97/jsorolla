@@ -23,11 +23,14 @@ export class CellBaseClient {
 
     constructor(config) {
         if (UtilsNew.isNotEmpty(config)) {
-            this._config = config;
+            // this._config = config;
+            this._config = this.getDefaultConfig();
+            // console.log("CellBaseClient not empty config", this._config);
         } else {
             this._config = this.getDefaultConfig();
+            // console.log("CellBaseClient empty config", this._config);
         }
-        this.setConfig(config);
+        // this.setConfig(config);
         if (this._config.cache.active) {
             this.indexedDBCache = new IndexedDBCache(this._config.cache.database);
             this._initCache();
@@ -174,6 +177,7 @@ export class CellBaseClient {
 
     async get(category, subcategory, ids, resource, params, options = {}) {
         // we store the options from the parameter or from the default values in config
+        console.log(category, subcategory,options.host, this._config);
         const host = options.host || this._config.host;
 
         if (!host) {
