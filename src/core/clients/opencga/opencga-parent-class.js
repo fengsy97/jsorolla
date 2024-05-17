@@ -16,7 +16,7 @@ export default class OpenCGAParentClass {
         // cannot use `params` in key as we want to cancel queries from the same origin (ajax function) but different params.
         const k = this.generateKey(params);
 
-        const host = this._config.host;
+        let host = this._config.host;
         const version = this._config.version;
         // const rpc = this._config.mode;
         const _options = options || {};
@@ -34,6 +34,13 @@ export default class OpenCGAParentClass {
             }
         }
 
+        if(category1 === "analysis" && category2 === "variant" && action === "query") {
+            // console.log("OpenCGA rest client calling to", host);
+            // host = "http://localhost:9191/opencga";
+            console.log("Method", method);
+            // console.log("OpenCGA rest client calling to", host);
+        }
+
         // If category == users and userId is not given, we try to set it
         if (category1 === "users" && (ids1 === undefined || ids1 === null || ids1 === "")) {
             ids1 = this._getUserId();
@@ -47,7 +54,9 @@ export default class OpenCGAParentClass {
                 _options["post-method"] = "form";
             }
         }
-
+        if(category1 === "analysis" && category2 === "variant" && action === "query") {
+            console.log("OpenCGA rest client calling to", url);
+        }
         // Enable credentials
         _options.includeCredentials = !!this._config?.sso?.active;
 

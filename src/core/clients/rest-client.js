@@ -70,7 +70,8 @@ export default class RestClient {
         let method = "GET";
         let async = true;
 
-        console.log("REST-Client: call to URL: ", url);
+        // console.log("REST-Client: call to URL: ", url);
+        // console.log("REST-Client: options: ", options);
 
         // const key = k ? RestClient.hash(k) : null;
 
@@ -92,6 +93,9 @@ export default class RestClient {
             method = options.method || "GET";
             async = options.async || true;
         }
+
+        console.log(`REST-Client: call to URL: ${url}`);
+        // console.log("calling method: ", method);
 
         // Creating the promise
         return new Promise((resolve, reject) => {
@@ -199,6 +203,7 @@ export default class RestClient {
                 request.setRequestHeader("Content-type", "application/json");
                 request.send();
             } else {
+                console.log("Sending request in call", url, request);
                 request.send();
             }
 
